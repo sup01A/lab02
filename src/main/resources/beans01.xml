@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--1.以Setter方式，注入系的信息：计算机系，编号为407-->
+    <bean id="dept1" class="cn.oushubo.pojo.Dept">
+        <property name="deptId" value="407"/>
+        <property name="deptname" value="计算机系"/>
+        <!--注入List集合-->
+        <property name="majors">
+            <list>
+                <bean class="cn.oushubo.pojo.Major">
+                    <property name="deptId" value="407"/>
+                    <property name="majorId" value="06"/>
+                    <property name="majorName" value="计算机科学与技术"/>
+                    <property name="tuition" value="26000"/>
+                </bean>
+                <bean class="cn.oushubo.pojo.Major">
+                    <property name="deptId" value="407"/>
+                    <property name="majorId" value="07"/>
+                    <property name="majorName" value="物联网工程"/>
+                    <property name="tuition" value="26000"/>
+                </bean>
+            </list>
+        </property>
+      </bean>
+<!--    2.以构造器方式，注入专业信息-->
+    <!--专业代码：08，名称：计算机科学与技术专业（国际班），学费：26000-->
+    <bean id="major1" class="cn.oushubo.pojo.Major">
+        <constructor-arg name="majorId" value="08"/>
+        <constructor-arg name="majorName" value="计算机科学与技术专业（国际班）"/>
+        <constructor-arg name="tuition" value="26000"/>
+        <constructor-arg name="deptId" value="407"/>
+         <!--注入Map集合-->
+        <constructor-arg name="classs">
+            <map>
+                <entry key="01" value="一班"/>
+                <entry key="02" value="二班"/>
+            </map>
+        </constructor-arg>
+    </bean>
+    <!--3.两种方式混合使用，注入专业信息-->
+    <!--专业代码：09，名称：计算机科学与技术专业，学费：26000-->
+    <bean id="major" class="cn.oushubo.pojo.Major">
+    <!--（1）以Setter方式注入专业的编号、名称、学费-->
+     <property name="majorId" value="09"/>
+     <property name="majorName" value="计算机科学与技术专业"/>
+     <property name="tuition" value="26000"/>
+    <!--（2）以对象引用方式注入专业的系别息信息，引用上述dept对象-->
+      <constructor-arg name="dept" ref="dept1"/>
+   </bean>
+</beans>
